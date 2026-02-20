@@ -134,7 +134,8 @@
 
         // ⚙️ SISTEMA DE PERSISTENCIA
         class QuantumPersistence {
-            static STORAGE_KEY = 'hotel_hamiltoniano_state_v1';
+            static PRIMARY_KEY = 'hotel_hamiltoniano_state_v2';
+            static LEGACY_KEYS = ['hotel_hamiltoniano_state_v1'];
 
             static save(engine) {
                 try {
@@ -148,7 +149,9 @@
                         currentPassage: engine.currentPassage,
                         timestamp: Date.now()
                     };
-                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
+                    const payload = JSON.stringify(state);
+                    localStorage.setItem(this.PRIMARY_KEY, payload);
+                    this.LEGACY_KEYS.forEach(k => localStorage.setItem(k, payload));
                     console.log('💾 Estado cuántico guardado:', state.currentPassage);
                 } catch (e) {
                     console.warn('⚠️ No se pudo guardar el estado:', e);
@@ -157,7 +160,13 @@
 
             static load() {
                 try {
-                    const raw = localStorage.getItem(this.STORAGE_KEY);
+                    let raw = localStorage.getItem(this.PRIMARY_KEY);
+                    if (!raw) {
+                        for (const k of this.LEGACY_KEYS) {
+                            raw = localStorage.getItem(k);
+                            if (raw) break;
+                        }
+                    }
                     if (!raw) return null;
                     const state = JSON.parse(raw);
                     console.log('📂 Estado cuántico restaurado:', state.currentPassage);
