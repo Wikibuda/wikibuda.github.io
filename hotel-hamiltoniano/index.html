@@ -28,11 +28,85 @@
         }
         .links {
             margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .links a {
-            color: #00ff87;
             text-decoration: none;
-            margin-right: 12px;
+        }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        .nav-link:hover {
+            transform: translateY(-1px);
+        }
+        .nav-link.docs {
+            color: #4cc9f0;
+            border-color: #4cc9f0;
+            background: rgba(76,201,240,0.12);
+        }
+        .nav-link.docs:hover {
+            background: rgba(76,201,240,0.22);
+        }
+        .nav-link.repo {
+            color: #ff6bcb;
+            border-color: #ff6bcb;
+            background: rgba(255,107,203,0.12);
+        }
+        .nav-link.repo:hover {
+            background: rgba(255,107,203,0.22);
+        }
+        .nav-link.map {
+            color: #00ff87;
+            border-color: #00ff87;
+            background: rgba(0,255,135,0.12);
+        }
+        .nav-link.map:hover {
+            background: rgba(0,255,135,0.22);
+        }
+        .links button {
+            background: rgba(0,255,135,0.15);
+            border: 1px solid #00ff87;
+            color: #00ff87;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .overlay-content {
+            width: 90%;
+            max-width: 900px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #00ff87;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 16px; }
+            .app-container { max-width: 100%; }
+            .dev-info { padding: 12px; }
+            .nav-link { padding: 10px; font-size: 14px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .links { gap: 8px; }
+            .nav-link { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -42,8 +116,9 @@
             <strong>🏨 HOTEL HAMILTONIANO - PROTOTIPO ACTO I</strong>
             <p>Motor cuántico integrado con pasajes interactivos</p>
           <div class="links">
-            <a href="https://github.com/Wikibuda/hotel-hamiltoniano/blob/main/TESTING_SCHEMA.md" target="_blank" rel="noopener">📚 Documentación de Pruebas</a>
-            <a href="https://github.com/Wikibuda/hotel-hamiltoniano" target="_blank" rel="noopener">🔗 Repositorio</a>
+            <a class="nav-link docs" href="https://github.com/Wikibuda/hotel-hamiltoniano/blob/main/TESTING_SCHEMA.md" target="_blank" rel="noopener">📚 Documentación de Pruebas</a>
+            <a class="nav-link repo" href="https://github.com/Wikibuda/hotel-hamiltoniano" target="_blank" rel="noopener">🔗 Repositorio</a>
+            <a class="nav-link map" href="./decision-map.html" target="_self" rel="noopener">🧭 Mapa de Decisiones</a>
           </div>
         </div>
         
@@ -59,6 +134,41 @@
         // Inicializar sistemas globales
         window.quantumEngine = new QuantumEngine();
         console.log('🏨 Hotel Hamiltoniano - Sistema cargado');
+        
+        const STORAGE_KEY = 'hotel_hamiltoniano_state_v2';
+        function saveState() {
+            const sup = Array.from(window.quantumEngine.superposedStates.entries()).map(([id, s]) => ({
+                id,
+                states: s.states.map(st => ({ id: st.id, value: st.value, collapsed: st.collapsed })),
+                collapsedIndex: s.collapsedState ? s.states.findIndex(x => x.id === s.collapsedState.id) : -1
+            }));
+            const state = {
+                superposedStates: sup,
+                realityHistory: window.quantumEngine.getDecisionHistory(),
+                currentReality: window.quantumEngine.currentReality
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        function restoreState() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            if (data && Array.isArray(data.superposedStates)) {
+                data.superposedStates.forEach(s => {
+                    window.quantumEngine.createSuperposition(s.id, s.states.map(st => st.value));
+                    if (s.collapsedIndex >= 0) {
+                        window.quantumEngine.collapseSuperposition(s.id, s.collapsedIndex);
+                    }
+                });
+            }
+        }
+        const originalCollapse = window.quantumEngine.collapseSuperposition.bind(window.quantumEngine);
+        window.quantumEngine.collapseSuperposition = function(...args) {
+            const r = originalCollapse(...args);
+            saveState();
+            return r;
+        };
+        restoreState();
         
         // Cargar el primer pasaje
         loadPassage('lobby-start');
@@ -95,6 +205,8 @@
         
         // Hacer la función global para los botones
         window.loadPassage = loadPassage;
+        
+        // Mapa de decisiones ahora accesible en página dedicada (decision-map.html)
     </script>
 </body>
 </html>

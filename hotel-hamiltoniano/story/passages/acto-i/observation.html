@@ -1,0 +1,90 @@
+<div class="quantum-passage observation-mode">
+  <h1>🔍 Modo Observación Activado</h1>
+  
+  <div class="reality-badge">
+    Realidad Actual: <strong id="current-reality"></strong>
+  </div>
+  
+  <div class="character-dialog">
+    <strong>🎭 Halim:</strong>
+    <p>¡Elección sabia! La observación cuidadosa revela detalles fascinantes:</p>
+    <ul>
+      <li>📊 La entropía del jacuzzi es: 3.1416 × suspiros de espuma</li>
+      <li>🐱 El gato superpone ronroneos en la habitación 42</li>
+      <li>🛗 El elevador de cuerdas vibra en la frecuencia de Planck</li>
+      <li>☕ El café tiene temperatura de Bekenstein: 2.73 K ± i√(imaginario)</li>
+    </ul>
+  </div>
+  
+  <div class="character-dialog">
+    <strong>🐱 Voz del Gato (por interfono):</strong>
+    <p>Si me estás observando... excelente timing. Estoy 73% vivo, 27% muerto, y 100% hambriento de ratones de Dirac.</p>
+  </div>
+  
+  <div class="navigation-buttons">
+    <button class="nav-button" onclick="window.loadPassage && window.loadPassage('lobby-start')">🏨 Volver al Lobby</button>
+    <button class="nav-button" onclick="alert('🔍 Más opciones de exploración en desarrollo...')">🔍 Explorar Más</button>
+  </div>
+</div>
+
+<style>
+.observation-mode {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  background: rgba(15, 12, 41, 0.9);
+  border-radius: 20px;
+  border: 2px solid #00ffff;
+}
+.reality-badge {
+  margin: 10px 0 20px;
+  background: rgba(0, 255, 255, 0.2);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-family: monospace;
+  border: 1px solid #00ffff;
+}
+.character-dialog {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 15px;
+  padding: 18px;
+  margin: 18px 0;
+  border-left: 4px solid #ff6bcb;
+}
+.navigation-buttons {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+.nav-button {
+  padding: 14px;
+  background: rgba(0, 255, 255, 0.15);
+  border: 1px solid #00ffff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.nav-button:hover {
+  background: rgba(0, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+@media (max-width: 768px) {
+  .observation-mode { padding: 18px; }
+  .character-dialog { padding: 16px; }
+  .navigation-buttons { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .observation-mode { padding: 14px; }
+  .nav-button { padding: 12px; }
+}
+</style>
+
+<script>
+(function() {
+  const el = document.getElementById('current-reality');
+  if (el && window.quantumEngine) {
+    el.textContent = window.quantumEngine.calculateRealityId();
+  }
+})();
+</script>

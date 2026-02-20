@@ -101,6 +101,20 @@
             margin: 20px 0;
             font-style: italic;
         }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .pizarra { padding: 18px; }
+            .ecuacion { font-size: 1.05em; }
+            .opciones { grid-template-columns: 1fr; }
+            .btn-opcion { padding: 12px; }
+        }
+        @media (min-width: 769px) {
+            .opciones { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 16px; }
+            .ecuacion { font-size: 0.95em; }
+        }
     </style>
 </head>
 <body>

@@ -3,8 +3,8 @@
     <h2>🔮 Realidad Colapsada</h2>
     
     <div class="decision-outcome">
-        <p>Has elegido: <strong>"{{window.quantumEngine.getDecisionState('lobby-entrada').collapsedState.value}}"</strong></p>
-        <p class="reality-id">Nueva realidad: <code>{{State.realityId}}</code></p>
+        <p>Has elegido: <strong id="decision-value"></strong></p>
+        <p class="reality-id">Nueva realidad: <code id="reality-id"></code></p>
     </div>
 
     <div class="character-response">
@@ -18,8 +18,8 @@
     <div class="next-actions">
         <h3>¿Qué deseas hacer ahora?</h3>
         <button onclick="continueToElevator()">🚀 Continuar al elevador de cuerdas</button>
-        <button onclick="exploreLobbyMore()">🔍 Explorar más el lobby</button>
         <button onclick="meetTheCat()">🐱 Buscar al gato de Schrödinger</button>
+        <button onclick="returnToLobby()">↩️ Regresar al Lobby</button>
     </div>
 </div>
 
@@ -40,9 +40,14 @@
         7: "Spin ajustado. Su función de onda ahora tiene un momento angular poético exquisito. Puede proceder con confianza."
     };
     
-    if (responseElement && responses[decision.collapsedState.id.split('-').pop()]) {
-        responseElement.textContent = responses[decision.collapsedState.id.split('-').pop()];
+    const choiceIdx = parseInt(decision.collapsedState.id.split('-').pop(), 10);
+    if (responseElement && responses[choiceIdx] !== undefined) {
+        responseElement.textContent = responses[choiceIdx];
     }
+    const decisionEl = document.getElementById('decision-value');
+    const realityEl = document.getElementById('reality-id');
+    if (decisionEl) decisionEl.textContent = decision.collapsedState.value;
+    if (realityEl) realityEl.textContent = window.quantumEngine.calculateRealityId();
 })();
 
 function continueToElevator() {
@@ -50,9 +55,11 @@ function continueToElevator() {
     alert('¡Elevador de cuerdas cósmicas activado! (Próxima escena)');
 }
 
-function exploreLobbyMore() {
-    console.log('🔍 Explorando más el lobby...');
-    alert('Descubres nuevos detalles cuánticos en el lobby...');
+function returnToLobby() {
+    console.log('↩️ Regresando al lobby...');
+    if (typeof window.loadPassage === 'function') {
+        window.loadPassage('lobby-start');
+    }
 }
 
 function meetTheCat() {
