@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Hamiltoniano - Prototipo Acto I</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .app-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .dev-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00ff87;
+        }
+        .links {
+            margin-top: 10px;
+        }
+        .links a {
+            color: #00ff87;
+            text-decoration: none;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="dev-info">
+            <strong>🏨 HOTEL HAMILTONIANO - PROTOTIPO ACTO I</strong>
+            <p>Motor cuántico integrado con pasajes interactivos</p>
+          <div class="links">
+            <a href="https://github.com/Wikibuda/hotel-hamiltoniano/blob/main/TESTING_SCHEMA.md" target="_blank" rel="noopener">📚 Documentación de Pruebas</a>
+            <a href="https://github.com/Wikibuda/hotel-hamiltoniano" target="_blank" rel="noopener">🔗 Repositorio</a>
+          </div>
+        </div>
+        
+        <div id="passage-container">
+            <!-- Los pasajes se cargarán aquí -->
+        </div>
+    </div>
+
+    <!-- Cargar el motor cuántico -->
+    <script type="module">
+        import { QuantumEngine } from './systems/quantum-engine.js';
+        
+        // Inicializar sistemas globales
+        window.quantumEngine = new QuantumEngine();
+        console.log('🏨 Hotel Hamiltoniano - Sistema cargado');
+        
+        // Cargar el primer pasaje
+        loadPassage('lobby-start');
+        
+        async function loadPassage(passageName) {
+            try {
+                const response = await fetch(`./story/passages/acto-i/${passageName}.html`);
+                const html = await response.text();
+            const container = document.getElementById('passage-container');
+            container.innerHTML = html;
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach(orig => {
+              const s = document.createElement('script');
+              if (orig.src) s.src = orig.src; else s.textContent = orig.textContent;
+              document.body.appendChild(s);
+              orig.remove();
+            });
+                console.log(`📖 Pasaje cargado: ${passageName}`);
+            } catch (error) {
+                console.error('Error cargando pasaje:', error);
+                document.getElementById('passage-container').innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h2>🏨 Hotel Hamiltoniano</h2>
+                        <p>El universo narrativo está cargando...</p>
+                        <p><strong>Motor cuántico:</strong> ✅ OPERATIVO</p>
+                        <p><strong>Realidades posibles:</strong> 291 sextillones</p>
+                        <button onclick="loadPassage('lobby-start')" style="padding: 10px 20px; margin: 10px;">
+                            🚀 Iniciar Experiencia
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Hacer la función global para los botones
+        window.loadPassage = loadPassage;
+    </script>
+</body>
+</html>

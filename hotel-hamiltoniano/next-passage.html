@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Hamiltoniano - Observación Cuántica</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white; font-family: 'Segoe UI', sans-serif;
+            padding: 20px; margin: 0; min-height: 100vh;
+        }
+        .quantum-passage {
+            max-width: 800px; margin: 0 auto; padding: 30px;
+            background: rgba(255,255,255,0.05); border-radius: 20px;
+            border: 1px solid rgba(0,255,255,0.3);
+        }
+        .reality-badge {
+            background: rgba(0,255,255,0.2); padding: 10px 20px;
+            border-radius: 20px; font-family: monospace; 
+            border: 1px solid #00ffff; text-align: center;
+            margin: 20px 0;
+        }
+        .character-dialog {
+            background: rgba(255,255,255,0.05); padding: 20px;
+            border-radius: 15px; margin: 20px 0;
+            border-left: 4px solid #00ffff;
+        }
+        .next-options button {
+            display: block; width: 100%; margin: 10px 0; padding: 15px;
+            background: rgba(255,107,203,0.2); border: 1px solid #ff6bcb;
+            color: white; border-radius: 10px; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .next-options button:hover {
+            background: rgba(255,107,203,0.4); transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-passage">
+        <h1>🔍 Modo Observación Activado</h1>
+        
+        <div class="reality-badge">
+            Realidad Actual: <strong id="current-reality">0x59D25C88</strong>
+        </div>
+
+        <div class="character-dialog">
+            <strong>🎭 Halim:</strong>
+            <p>"¡Elección sabia! La observación cuidadosa revela que el lobby existe en 11 dimensiones simultáneamente. Noto que:</p>
+            <ul>
+                <li>📊 La entropía del jacuzzi es: 3.1416 × suspiros de espuma</li>
+                <li>🐱 El gato superpone ronroneos en la habitación 42</li>
+                <li>🛗 El elevador de cuerdas vibra en la frecuencia de Planck</li>
+                <li>☕ El café tiene temperatura de Bekenstein: 2.73 K ± i√(imaginario)"</li>
+            </ul>
+        </div>
+
+        <div class="character-dialog">
+            <strong>🐱 Voz del Gato (por interfono):</strong>
+            <p>"Si me estás observando... ¡excelente timing! Estoy 73% vivo, 27% muerto, y 100% hambriento de ratones de Dirac."</p>
+        </div>
+
+        <div class="next-options">
+            <h3>🌌 ¿Qué observas a continuación?</h3>
+            <button onclick="interactWith('elevador')">🛗 Examinar el elevador de cuerdas</button>
+            <button onclick="interactWith('gato')">🐱 Seguir la voz del gato</button>
+            <button onclick="interactWith('jacuzzi')">🛁 Calcular la entropía del jacuzzi</button>
+            <button onclick="interactWith('interfono')">📞 Responder al interfono de la gerente</button>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar la realidad actual
+        document.getElementById('current-reality').textContent = 
+            localStorage.getItem('currentReality') || '0x59D25C88';
+
+        function interactWith(element) {
+            const realities = {
+                elevador: '0x7A3B4C5D',
+                gato: '0x8E9F0A1B', 
+                jacuzzi: '0x2C3D4E5F',
+                interfono: '0x1A2B3C4D'
+            };
+            
+            const newReality = realities[element] || '0x59D25C88';
+            
+            // Guardar para persistencia
+            localStorage.setItem('currentReality', newReality);
+            
+            alert(`🔮 Interactuando con: ${element}\n🌌 Nueva realidad: ${newReality}\n\n(En la versión completa, esto navegaría al pasaje correspondiente)`);
+            
+            // Recargar para simular navegación
+            setTimeout(() => {
+                document.getElementById('current-reality').textContent = newReality;
+                document.querySelector('h1').textContent = `🔍 Observando: ${element}`;
+            }, 1000);
+        }
+
+        console.log('🔍 Pasaje de observación cargado - Realidad:', 
+            localStorage.getItem('currentReality') || '0x59D25C88');
+    </script>
+</body>
+</html>

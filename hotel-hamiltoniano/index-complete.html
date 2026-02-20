@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Hamiltoniano - Prototipo Acto I</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white; font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh; padding: 20px; line-height: 1.6;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .dev-info {
+            background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;
+            margin-bottom: 20px; border-left: 4px solid #00ff87; text-align: center;
+        }
+        .quantum-passage {
+            background: rgba(255,255,255,0.05); border-radius: 20px; padding: 30px;
+            border: 1px solid rgba(0,255,255,0.3); box-shadow: 0 0 50px rgba(0,255,255,0.2);
+        }
+        .hotel-header {
+            text-align: center; margin-bottom: 30px; padding: 20px;
+            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,107,203,0.1));
+            border-radius: 15px;
+        }
+        .hotel-header h1 {
+            font-size: 2.5em; margin: 0;
+            background: linear-gradient(45deg, #00ffff, #ff6bcb);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .reality-badge {
+            background: rgba(0,255,255,0.2); padding: 5px 15px; border-radius: 20px;
+            font-family: monospace; border: 1px solid #00ffff; margin-top: 10px;
+        }
+        .character-dialog {
+            background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px;
+            margin: 20px 0; border-left: 4px solid #00ffff;
+            display: flex; align-items: flex-start; gap: 15px;
+        }
+        .character-avatar { font-size: 2em; flex-shrink: 0; }
+        .quantum-decision {
+            background: rgba(0,255,255,0.1); border-radius: 15px; padding: 25px;
+            margin: 30px 0; border: 1px solid rgba(0,255,255,0.3);
+        }
+        .quantum-options { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .quantum-option {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(0,255,255,0.3);
+            color: white; padding: 15px; border-radius: 10px; cursor: pointer;
+            text-align: left; transition: all 0.3s ease; font-size: 14px;
+        }
+        .quantum-option:hover {
+            background: rgba(0,255,255,0.2); transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,255,0.3);
+        }
+        .quantum-option.superposed {
+            opacity: 0.8; animation: superposition-pulse 2s infinite;
+        }
+        @keyframes superposition-pulse {
+            0%, 100% { opacity: 0.7; } 50% { opacity: 1; }
+        }
+        .navigation-buttons {
+            display: flex; gap: 10px; margin-top: 20px;
+        }
+        .nav-button {
+            padding: 10px 20px; background: rgba(255,107,203,0.2);
+            border: 1px solid #ff6bcb; color: white; border-radius: 8px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            background: rgba(255,107,203,0.4); transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="dev-info">
+            <strong>🏨 HOTEL HAMILTONIANO - PROTOTIPO ACTO I</strong>
+            <p id="page-subtitle">Motor cuántico con persistencia - ¡Tu multiverso se guarda!</p>
+        </div>
+        <div id="passage-container"></div>
+    </div>
+    <script>
+        // ⚛️ MOTOR CUÁNTICO
+        class QuantumEngine {
+            constructor() {
+                this.superposedStates = new Map();
+                this.realityHistory = [];
+                this.currentPassage = 'lobby';
+            }
+            createSuperposition(decisionId, options) {
+                const superposition = {
+                    id: decisionId,
+                    states: options.map((opt, idx) => ({
+                        id: `${decisionId}-state-${idx}`, value: opt, collapsed: false
+                    })),
+                    collapsedState: null
+                };
+                this.superposedStates.set(decisionId, superposition);
+                return superposition;
+            }
+            collapseSuperposition(decisionId, choiceIndex) {
+                const superposition = this.superposedStates.get(decisionId);
+                if (!superposition || choiceIndex < 0 || choiceIndex >= superposition.states.length) return null;
+                superposition.states.forEach((state, idx) => {
+                    state.collapsed = (idx === choiceIndex);
+                });
+                superposition.collapsedState = superposition.states[choiceIndex];
+                this.realityHistory.push({
+                    decisionId, collapsedState: superposition.collapsedState,
+                    realityId: this.calculateRealityId()
+                });
+                return superposition.collapsedState;
+            }
+            calculateRealityId() {
+                const decisions = Array.from(this.superposedStates.values())
+                    .filter(sup => sup.collapsedState)
+                    .map(sup => sup.collapsedState.id).sort();
+                if (decisions.length === 0) return '0x0000';
+                let hash = 0;
+                const str = decisions.join('|');
+                for (let i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                    hash = hash & hash;
+                }
+                return `0x${Math.abs(hash).toString(16).substring(0,8).toUpperCase()}`;
+            }
+            navigateTo(passage) {
+                this.currentPassage = passage;
+                return passage;
+            }
+        }
+
+        // ⚙️ SISTEMA DE PERSISTENCIA
+        class QuantumPersistence {
+            static STORAGE_KEY = 'hotel_hamiltoniano_state_v1';
+
+            static save(engine) {
+                try {
+                    const state = {
+                        superposedStates: Array.from(engine.superposedStates.entries()).map(([id, sup]) => ({
+                            id,
+                            states: sup.states,
+                            collapsedState: sup.collapsedState
+                        })),
+                        realityHistory: engine.realityHistory,
+                        currentPassage: engine.currentPassage,
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
+                    console.log('💾 Estado cuántico guardado:', state.currentPassage);
+                } catch (e) {
+                    console.warn('⚠️ No se pudo guardar el estado:', e);
+                }
+            }
+
+            static load() {
+                try {
+                    const raw = localStorage.getItem(this.STORAGE_KEY);
+                    if (!raw) return null;
+                    const state = JSON.parse(raw);
+                    console.log('📂 Estado cuántico restaurado:', state.currentPassage);
+                    return state;
+                } catch (e) {
+                    console.warn('⚠️ No se pudo cargar el estado:', e);
+                    return null;
+                }
+            }
+
+            static restoreEngine(engine, state) {
+                engine.superposedStates.clear();
+                state.superposedStates.forEach(({ id, states, collapsedState }) => {
+                    const sup = {
+                        id,
+                        states: states.map(s => ({ ...s })),
+                        collapsedState: collapsedState ? { ...collapsedState } : null
+                    };
+                    engine.superposedStates.set(id, sup);
+                });
+                engine.realityHistory = state.realityHistory.map(h => ({ ...h }));
+                engine.currentPassage = state.currentPassage;
+            }
+        }
+
+        // 🎮 INTERFAZ DE USUARIO
+        document.addEventListener('DOMContentLoaded', () => {
+            const quantumEngine = new QuantumEngine();
+            window.quantumEngine = quantumEngine;
+
+            // 🔄 Restaurar estado si existe
+            const savedState = QuantumPersistence.load();
+            if (savedState) {
+                QuantumPersistence.restoreEngine(quantumEngine, savedState);
+                document.getElementById('page-subtitle').textContent = 
+                    `Lobby del Hotel - Realidad restaurada: ${quantumEngine.calculateRealityId()}`;
+            }
+
+            // 🧠 Guardar automáticamente al colapsar
+            const originalCollapse = quantumEngine.collapseSuperposition.bind(quantumEngine);
+            quantumEngine.collapseSuperposition = function(...args) {
+                const result = originalCollapse(...args);
+                QuantumPersistence.save(this);
+                return result;
+            };
+
+            loadPassage(quantumEngine.currentPassage || 'lobby');
+
+            function loadPassage(passageName) {
+                quantumEngine.navigateTo(passageName);
+                if (passageName === 'lobby') {
+                    loadLobbyPassage();
+                } else if (passageName === 'observation') {
+                    loadObservationPassage();
+                }
+            }
+
+            function loadLobbyPassage() {
+                const lobbyHTML = `
+                    <div class="quantum-passage lobby-start">
+                        <div class="hotel-header">
+                            <h1>🏨 HOTEL HAMILTONIANO</h1>
+                            <div class="reality-indicator">
+                                <span class="reality-badge">Realidad: ${quantumEngine.calculateRealityId()}</span>
+                            </div>
+                        </div>
+                        <div class="atmosphere">
+                            <p>Te encuentras en el umbral del <strong>Hotel Hamiltoniano</strong>, donde las ecuaciones son suites de cristal y los operadores son maîtres de salón. El aire vibra con posibilidades superpuestas.</p>
+                        </div>
+                        <div class="character-dialog halim-intro">
+                            <div class="character-avatar">🎭</div>
+                            <div class="dialog-content">
+                                <strong>Halim:</strong>
+                                <p>¡Bienvenido, viajero cuántico! Su reserva existe en un estado de superposición elegante. ¿Desea proceder con el check-in paradójico?</p>
+                            </div>
+                        </div>
+                        <div class="quantum-decision">
+                            <h3>🌌 Su primera decisión cuántica:</h3>
+                            <div class="quantum-options">
+                                <button class="quantum-option superposed" onclick="makeChoice(0, this)">
+                                    👁️ "Prefiero observar antes de colapsar la función de onda"
+                                </button>
+                                <button class="quantum-option superposed" onclick="makeChoice(1, this)">
+                                    🏗️ "Escribir en la pizarra de Planck"
+                                </button>
+                                <button class="quantum-option superposed" onclick="makeChoice(2, this)">
+                                    🐱 "Interactuar con el Gato de Schrödinger"
+                                </button>
+                                <button class="quantum-option superposed" onclick="makeChoice(3, this)">
+                                    🛁 "Calcular la entropía del jacuzzi"
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('passage-container').innerHTML = lobbyHTML;
+                document.getElementById('page-subtitle').textContent = 'Lobby del Hotel - Elige tu camino cuántico';
+                quantumEngine.createSuperposition('lobby-entrada', [
+                    "Prefiero observar antes de colapsar la función de onda",
+                    "Escribir en la pizarra de Planck",
+                    "Interactuar con el Gato de Schrödinger",
+                    "Calcular la entropía del jacuzzi"
+                ]);
+            }
+
+            function loadObservationPassage() {
+                const observationHTML = `
+                    <div class="quantum-passage">
+                        <h1>🔍 Modo Observación Activado</h1>
+                        <div class="reality-badge">
+                            Realidad Actual: <strong>${quantumEngine.calculateRealityId()}</strong>
+                        </div>
+                        <div class="character-dialog">
+                            <strong>🎭 Halim:</strong>
+                            <p>"¡Elección sabia! La observación cuidadosa revela detalles fascinantes:</p>
+                            <ul>
+                                <li>📊 La entropía del jacuzzi es: 3.1416 × suspiros de espuma</li>
+                                <li>🐱 El gato superpone ronroneos en la habitación 42</li>
+                                <li>🛗 El elevador de cuerdas vibra en la frecuencia de Planck</li>
+                                <li>☕ El café tiene temperatura de Bekenstein: 2.73 K ± i√(imaginario)"</li>
+                            </ul>
+                        </div>
+                        <div class="character-dialog">
+                            <strong>🐱 Voz del Gato (por interfono):</strong>
+                            <p>"Si me estás observando... ¡excelente timing! Estoy 73% vivo, 27% muerto, y 100% hambriento de ratones de Dirac."</p>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button class="nav-button" onclick="loadPassage('lobby')">🏨 Volver al Lobby</button>
+                            <button class="nav-button" onclick="exploreMore()">🔍 Explorar Más</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('passage-container').innerHTML = observationHTML;
+                document.getElementById('page-subtitle').textContent = 'Observación Cuántica - Detalles revelados';
+            }
+
+            window.makeChoice = (choiceIndex, element) => {
+                const options = element.parentElement.querySelectorAll('.quantum-option');
+                options.forEach(opt => {
+                    opt.classList.remove('superposed');
+                    opt.style.opacity = '0.6';
+                    opt.disabled = true;
+                });
+                element.style.background = 'rgba(0, 255, 255, 0.3)';
+                element.style.transform = 'scale(1.05)';
+
+                const choice = quantumEngine.collapseSuperposition('lobby-entrada', choiceIndex);
+                const newReality = quantumEngine.calculateRealityId();
+                document.querySelector('.reality-badge').textContent = `Realidad: ${newReality}`;
+
+                setTimeout(() => {
+                    if (choiceIndex === 0) {
+                        loadPassage('observation');
+                    } else if (choiceIndex === 1) {
+                        window.location.href = './story/passages/acto-i/pasaje_pizarra.html?t=' + Date.now();
+                    } else {
+                        alert(`🎉 ¡Decisión registrada!\n"${choice.value}"\n🌌 Realidad: ${newReality}`);
+                    }
+                }, 1000);
+            };
+
+            window.loadPassage = loadPassage;
+            window.exploreMore = () => {
+                alert('🔍 Más opciones en desarrollo...');
+            };
+        });
+    </script>
+</body>
+</html>

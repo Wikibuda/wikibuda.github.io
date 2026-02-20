@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Hamiltoniano - Pizarra de Planck</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 100%);
+            color: #e0e0ff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(25, 25, 60, 0.9);
+            border: 2px solid #4cc9f0;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(76, 201, 240, 0.3);
+        }
+        .pizarra {
+            background: #000015;
+            border: 3px solid #4cc9f0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .pizarra::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4cc9f0, transparent);
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .ecuacion {
+            font-size: 1.2em;
+            color: #4cc9f0;
+            text-align: center;
+            margin: 15px 0;
+            animation: brillo 4s infinite alternate;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        @keyframes brillo {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        .opciones {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .btn-opcion {
+            background: rgba(76, 201, 240, 0.1);
+            border: 1px solid #4cc9f0;
+            color: #e0e0ff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        .btn-opcion:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+        .btn-volver {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #8888ff;
+            color: #e0e0ff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-volver:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .halim-mensaje {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #4cc9f0; margin-bottom: 10px;">🏗️ PIZARRA DE PLANCK</h1>
+        <p style="text-align: center; opacity: 0.8;">Donde las ecuaciones escriben versos y los versos resuelven ecuaciones</p>
+        <div class="halim-mensaje">
+            "La tiza existe en superposición - escribe lo que el universo ya sabe..."
+        </div>
+        <div class="pizarra">
+            <div class="ecuacion">ħ∂ψ/∂t = Ĥψ</div>
+            <div class="ecuacion">∫∇²Φ = 4πGρ</div>
+            <div class="ecuacion">S = k log W</div>
+            <div class="ecuacion" style="animation-delay: 2s;">ψ = Aexp(iθ) + Bexp(-iθ)</div>
+            <div style="text-align: center; margin-top: 20px; opacity: 0.7;">
+                Las ecuaciones parpadean entre existencia y olvido...
+            </div>
+        </div>
+        <div class="opciones">
+            <button class="btn-opcion" onclick="elegirOpcion('entropia')">
+                "¿La entropía del jacuzzi = π × suspiros?"
+            </button>
+            <button class="btn-opcion" onclick="elegirOpcion('gato_verso')">
+                "El gato está vivo, muerto y escribiendo versos"
+            </button>
+            <button class="btn-opcion" onclick="elegirOpcion('migas')">
+                "Las migas de cruasán germinan jardines"
+            </button>
+            <button class="btn-opcion" onclick="elegirOpcion('observar')">
+                "Prefiero solo observar las ecuaciones"
+            </button>
+        </div>
+        <div style="text-align: center;">
+            <button class="btn-volver" onclick="volverAlLobby()">
+                🔙 Volver al Lobby Cuántico
+            </button>
+        </div>
+    </div>
+    <script>
+        // ⚙️ MOTOR CUÁNTICO CON PERSISTENCIA
+        class MotorCuantico {
+            static STORAGE_KEY = 'hotel_hamiltoniano_pizarra_v1';
+
+            static generarRealidadUnica(contexto) {
+                let hash = 0;
+                for (let i = 0; i < contexto.length; i++) {
+                    const char = contexto.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return '0x' + Math.abs(hash).toString(16).padStart(8, '0').toUpperCase().substring(0, 8);
+            }
+
+            static colapsarDecision(tipo, opcion) {
+                const contexto = `${tipo}-${opcion}-${Date.now()}`;
+                const realidad = this.generarRealidadUnica(contexto);
+                const decision = {
+                    tipo: tipo,
+                    opcion: opcion,
+                    realidad: realidad,
+                    timestamp: new Date().toISOString()
+                };
+
+                // 💾 Guardar en localStorage
+                try {
+                    const historial = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
+                    historial.push(decision);
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(historial));
+                } catch (e) {
+                    console.warn('⚠️ No se pudo guardar la decisión en pizarra:', e);
+                }
+
+                console.log('Decisión cuántica (Pizarra):', decision);
+                return realidad;
+            }
+        }
+
+        const mensajesPizarra = {
+            entropia: {
+                titulo: "📈 ENTROPÍA POÉTICA",
+                mensaje: "Halim sonríe: 'La entropía prefiere versos a números. El jacuzzi susurra su aprobación en burbujas de probabilidad.'"
+            },
+            gato_verso: {
+                titulo: "🐱 GATO POETA",
+                mensaje: "La pizarra responde: 'El gato aprueba tu métrica. Los versos ahora tienen spin 1/2 y riman en dimensiones extra.'"
+            },
+            migas: {
+                titulo: "🌱 JARDÍN CUÁNTICO",
+                mensaje: "Aparecen ecuaciones de jardinería multidimensional. Las migas de cruasán ahora son semillas de universos en ciernes."
+            },
+            observar: {
+                titulo: "👁️ OBSERVADOR PURO", 
+                mensaje: "Las ecuaciones se estabilizan en tu presencia. El universo respeta tu elección de no-colapso. Eres pura conciencia observadora."
+            }
+        };
+
+        function elegirOpcion(opcion) {
+            const realidad = MotorCuantico.colapsarDecision('pizarra_planck', opcion);
+            const mensaje = mensajesPizarra[opcion];
+            const alertHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #1a1a3e, #0c0c2e);
+                    border: 2px solid #4cc9f0;
+                    border-radius: 15px;
+                    padding: 25px;
+                    color: #e0e0ff;
+                    font-family: 'Courier New', monospace;
+                    max-width: 500px;
+                    text-align: center;
+                ">
+                    <h2 style="color: #4cc9f0; margin-top: 0;">${mensaje.titulo}</h2>
+                    <p style="margin: 20px 0; line-height: 1.5;">${mensaje.mensaje}</p>
+                    <div style="
+                        background: rgba(76, 201, 240, 0.2);
+                        padding: 10px;
+                        border-radius: 8px;
+                        border: 1px dashed #4cc9f0;
+                        font-family: monospace;
+                        margin: 15px 0;
+                    ">
+                        🌌 Realidad: ${realidad}
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: #4cc9f0;
+                        color: #0c0c2e;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-family: 'Courier New', monospace;
+                        font-weight: bold;
+                    ">
+                        Continuar el Viaje
+                    </button>
+                </div>
+            `;
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            overlay.innerHTML = alertHTML;
+            document.body.appendChild(overlay);
+        }
+
+        function volverAlLobby() {
+            window.location.href = "../../../index-complete.html?t=" + Date.now();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ecuaciones = document.querySelectorAll('.ecuacion');
+            ecuaciones.forEach((ecuacion, index) => {
+                ecuacion.style.animationDelay = (index * 1.5) + 's';
+            });
+        });
+    </script>
+</body>
+</html>

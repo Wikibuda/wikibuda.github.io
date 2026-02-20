@@ -1,0 +1,48 @@
+/* 
+Template de Pasaje - Hotel Hamiltoniano
+Etiquetas: [quantum] [decision] [character]
+*/
+
+:: Pasaje Template
+<!-- Contenido HTML del pasaje -->
+<div class="quantum-passage" data-reality="{{$realityId}}">
+    
+    <!-- Diálogo de personaje -->
+    <div class="character-dialog" data-character="{{$currentCharacter}}">
+        <strong>{{$characterName}}:</strong>
+        <p>{{$characterDialog}}</p>
+    </div>
+    
+    <!-- Decisiones superpuestas -->
+    <div class="quantum-choices" data-decision-id="{{$decisionId}}">
+        <!-- Las opciones se generan dinámicamente -->
+    </div>
+    
+    <!-- Navegación de realidad -->
+    <div class="reality-nav" data-visible="{{$showRealityNav}}">
+        <button class="nav-btn" onclick="window.quantumEngine.navigateReality(-1)">← Realidad Anterior</button>
+        <span class="reality-id">Realidad: {{$realityId}}</span>
+        <button class="nav-btn" onclick="window.quantumEngine.navigateReality(1)">Siguiente Realidad →</button>
+    </div>
+</div>
+
+<script>
+// Script específico del pasaje
+(function() {
+    // Inicialización del pasaje
+    const passageId = '{{$passageId}}';
+    const realityId = '{{$realityId}}';
+    
+    // Precargar assets si es necesario
+    if (window.assetManager) {
+        window.assetManager.preloadNextPassage(passageId);
+    }
+    
+    // Track analytics
+    if (window.quantumAnalytics) {
+        window.quantumAnalytics.trackPassageView(passageId, realityId);
+    }
+    
+    console.log(`🌌 Pasaje ${passageId} cargado en realidad ${realityId}`);
+})();
+</script>

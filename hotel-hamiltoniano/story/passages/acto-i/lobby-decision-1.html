@@ -1,0 +1,111 @@
+<!-- 🎭 PASAJE: RESULTADO DECISIÓN LOBBY -->
+<div class="quantum-passage decision-result">
+    <h2>🔮 Realidad Colapsada</h2>
+    
+    <div class="decision-outcome">
+        <p>Has elegido: <strong>"{{window.quantumEngine.getDecisionState('lobby-entrada').collapsedState.value}}"</strong></p>
+        <p class="reality-id">Nueva realidad: <code>{{State.realityId}}</code></p>
+    </div>
+
+    <div class="character-response">
+        <div class="character-avatar">🎭</div>
+        <div class="dialog-content">
+            <strong>Halim responde:</strong>
+            <p id="halim-response">Cargando respuesta cuántica...</p>
+        </div>
+    </div>
+
+    <div class="next-actions">
+        <h3>¿Qué deseas hacer ahora?</h3>
+        <button onclick="continueToElevator()">🚀 Continuar al elevador de cuerdas</button>
+        <button onclick="exploreLobbyMore()">🔍 Explorar más el lobby</button>
+        <button onclick="meetTheCat()">🐱 Buscar al gato de Schrödinger</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    // Cargar respuesta de Halim basada en la decisión
+    const decision = window.quantumEngine.getDecisionState('lobby-entrada');
+    const responseElement = document.getElementById('halim-response');
+    
+    const responses = {
+        0: "¡Excelente elección! La superposición es nuestro estado natural. Su suite de Schrödinger le espera... y no le espera simultáneamente.",
+        1: "Un observador cuidadoso. La paciencia es una virtud cuántica. ¿Qué más desea examinar antes de colapsar más realidades?",
+        2: "El gato está... bueno, usted sabe cómo es. Actualmente superpone ronroneos y silencios en proporciones elegantes.",
+        3: "Fascinante enfoque científico. El jacuzzi autoconsciente aprecia su atención meticulosa a la entropía.",
+        4: "El botones poético será notificado. Subirá sus paradojas en el elevador de cuerdas cósmicas inmediatamente.",
+        5: "El café cuántico tiene una temperatura de Bekenstein de exactamente 2.73 K, con un error de ±i√(imaginario).",
+        6: "La superposición sensorial revela que el lobby existe en 11 dimensiones simultáneamente. ¿Puede percibirlas todas?",
+        7: "Spin ajustado. Su función de onda ahora tiene un momento angular poético exquisito. Puede proceder con confianza."
+    };
+    
+    if (responseElement && responses[decision.collapsedState.id.split('-').pop()]) {
+        responseElement.textContent = responses[decision.collapsedState.id.split('-').pop()];
+    }
+})();
+
+function continueToElevator() {
+    console.log('🛗 Navegando al elevador de cuerdas...');
+    alert('¡Elevador de cuerdas cósmicas activado! (Próxima escena)');
+}
+
+function exploreLobbyMore() {
+    console.log('🔍 Explorando más el lobby...');
+    alert('Descubres nuevos detalles cuánticos en el lobby...');
+}
+
+function meetTheCat() {
+    console.log('🐱 Buscando al gato...');
+    alert('El gato de Schrödinger aparece... o no aparece... o ambas cosas...');
+}
+</script>
+
+<style>
+.decision-result {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background: rgba(15, 12, 41, 0.9);
+    border-radius: 20px;
+    border: 2px solid #ff6bcb;
+}
+
+.decision-outcome {
+    background: rgba(0, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.reality-id {
+    font-family: monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.next-actions {
+    margin-top: 30px;
+}
+
+.next-actions button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    background: rgba(255, 107, 203, 0.2);
+    border: 1px solid #ff6bcb;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.next-actions button:hover {
+    background: rgba(255, 107, 203, 0.4);
+    transform: translateY(-2px);
+}
+</style>

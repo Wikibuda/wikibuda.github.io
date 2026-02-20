@@ -1,0 +1,321 @@
+<!-- 🏨 PASAJE: LOBBY INICIAL - ACTO I -->
+<!-- Donde comienza el viaje cuántico de cada huésped -->
+
+<div class="quantum-passage lobby-start" data-reality="{{State.realityId}}">
+    
+    <!-- Encabezado del Hotel -->
+    <div class="hotel-header">
+        <h1>🏨 HOTEL HAMILTONIANO</h1>
+        <div class="reality-indicator">
+            <span class="reality-badge">Realidad: {{State.realityId}}</span>
+        </div>
+    </div>
+
+    <!-- Descripción atmosférica -->
+    <div class="atmosphere">
+        <p>Te encuentras en el umbral del <strong>Hotel Hamiltoniano</strong>, donde las ecuaciones son suites de cristal y los operadores son maîtres de salón. El aire vibra con posibilidades superpuestas, y cada superficie refleja realidades alternas.</p>
+        
+        <div class="quantum-effects">
+            <div class="effect-particles"></div>
+        </div>
+    </div>
+
+    <!-- Halim - El Concierge del Caos -->
+    <div class="character-dialog halim-intro">
+        <div class="character-avatar">🎭</div>
+        <div class="dialog-content">
+            <strong>Halim:</strong>
+            <p id="halim-greeting">¡Bienvenido, viajero cuántico! Su reserva existe en un estado de superposición elegante: <em>confirmada y cancelada simultáneamente</em>. ¿Desea proceder con el check-in paradójico?</p>
+        </div>
+    </div>
+
+    <!-- Primer conjunto de decisiones cuánticas -->
+    <div class="quantum-decision" data-decision-id="lobby-entrada">
+        <h3>🌌 Su primera decisión cuántica:</h3>
+        
+        <div class="quantum-options">
+            <button class="quantum-option superposed" data-choice="0" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 0, this)">
+                🎩 "Acepto la superposición con entusiasmo poético-cuántico"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="1" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 1, this)">
+                🤔 "Prefiero observar las opciones antes de colapsar la función de onda"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="2" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 2, this)">
+                🐱 "¿Dónde está el gato de Schrödinger? Necesito confirmar su estado vital"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="3" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 3, this)">
+                📝 "Deseo calcular manualmente la entropía del jacuzzi primero"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="4" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 4, this)">
+                🎒 "Mi maleta de paradojas necesita ser entregada al botones poético"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="5" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 5, this)">
+                ☕ "Antes que nada, necesito medir la temperatura de Bekenstein de un café"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="6" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 6, this)">
+                🔮 "Quiero explorar el lobby en estado de superposición sensorial"
+            </button>
+            
+            <button class="quantum-option superposed" data-choice="7" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 7, this)">
+                ⚛️ "Deseo ajustar el spin de mi función de onda antes de proceder"
+            </button>
+        </div>
+    </div>
+
+    <!-- Elementos ambientales interactivos -->
+    <div class="environment-interactions">
+        <div class="interaction-item" data-interaction="pizarra-planck">
+            <div class="interaction-icon">📜</div>
+            <span>Pizarra de Planck</span>
+        </div>
+        
+        <div class="interaction-item" data-interaction="elevador-cuerdas">
+            <div class="interaction-icon">🛗</div>
+            <span>Elevador de Cuerdas Cósmicas</span>
+        </div>
+        
+        <div class="interaction-item" data-interaction="interfono-gerente">
+            <div class="interaction-icon">📞</div>
+            <span>Interfono de la Gerente</span>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.quantum-passage.lobby-start {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(15, 12, 41, 0.8);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.hotel-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 107, 203, 0.1));
+    border-radius: 15px;
+}
+
+.hotel-header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    background: linear-gradient(45deg, #00ffff, #ff6bcb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.reality-indicator {
+    margin-top: 10px;
+}
+
+.reality-badge {
+    background: rgba(0, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-family: monospace;
+    border: 1px solid #00ffff;
+}
+
+.character-dialog {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #00ffff;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.character-avatar {
+    font-size: 2em;
+    flex-shrink: 0;
+}
+
+.dialog-content {
+    flex: 1;
+}
+
+.quantum-decision {
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.quantum-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.quantum-option {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.quantum-option:hover {
+    background: rgba(0, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+.quantum-option.superposed {
+    opacity: 0.8;
+    animation: superposition-pulse 2s infinite;
+}
+
+.environment-interactions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+}
+
+.interaction-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.interaction-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.interaction-icon {
+    font-size: 1.5em;
+}
+
+@keyframes superposition-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.quantum-effects {
+    height: 100px;
+    position: relative;
+    margin: 20px 0;
+}
+
+.effect-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 203, 0.3) 0%, transparent 50%);
+    animation: quantum-float 10s ease-in-out infinite;
+}
+
+@keyframes quantum-float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
+}
+</style>
+
+<script>
+// Inicialización del pasaje
+(function() {
+    console.log('🏨 Pasaje Lobby Start - Cargado');
+    
+    // Inicializar motor cuántico si no existe
+    if (!window.quantumEngine) {
+        window.quantumEngine = new QuantumEngine();
+        console.log('⚛️ Motor cuántico inicializado en pasaje');
+    }
+    
+    // Inicializar interfaz si no existe
+    if (!window.quantumInterface) {
+        window.quantumInterface = {
+            collapseChoice: function(decisionId, choiceIndex, element) {
+                console.log(`🔮 Colapsando decisión: ${decisionId}, opción: ${choiceIndex}`);
+                
+                // Efecto visual de colapso
+                const options = element.parentElement.querySelectorAll('.quantum-option');
+                options.forEach(opt => {
+                    opt.classList.remove('superposed');
+                    opt.style.opacity = '0.6';
+                    opt.style.pointerEvents = 'none';
+                });
+                
+                element.style.opacity = '1';
+                element.style.background = 'rgba(0, 255, 255, 0.3)';
+                element.style.transform = 'scale(1.05)';
+                
+                // Colapsar en el motor
+                const collapsed = window.quantumEngine.collapseSuperposition(decisionId, choiceIndex);
+                
+                // Actualizar realidad en la UI
+                const realityBadge = document.querySelector('.reality-badge');
+                if (realityBadge) {
+                    realityBadge.textContent = `Realidad: ${window.quantumEngine.calculateRealityId()}`;
+                }
+                
+                // Navegar al siguiente pasaje
+                console.log('🚀 Navegando al siguiente pasaje...');
+                if (typeof window.loadPassage === 'function') {
+                    window.loadPassage('lobby-decision-1');
+                }
+                
+                return collapsed;
+            }
+        };
+    }
+    
+    // Crear superposición inicial para las decisiones del lobby
+    const lobbyOptions = [
+        "Acepto la superposición con entusiasmo poético-cuántico",
+        "Prefiero observar las opciones antes de colapsar la función de onda", 
+        "¿Dónde está el gato de Schrödinger? Necesito confirmar su estado vital",
+        "Deseo calcular manualmente la entropía del jacuzzi primero",
+        "Mi maleta de paradojas necesita ser entregada al botones poético",
+        "Antes que nada, necesito medir la temperatura de Bekenstein de un café",
+        "Quiero explorar el lobby en estado de superposición sensorial",
+        "Deseo ajustar el spin de mi función de onda antes de proceder"
+    ];
+    
+    window.quantumEngine.createSuperposition('lobby-entrada', lobbyOptions);
+    console.log('🌌 Superposición de lobby creada con 8 opciones');
+    
+    // Actualizar indicador de realidad
+    const realityBadge = document.querySelector('.reality-badge');
+    if (realityBadge) {
+        realityBadge.textContent = `Realidad: ${window.quantumEngine.calculateRealityId()}`;
+    }
+
+    // Navegación por interacciones del entorno
+    const pizarra = document.querySelector('[data-interaction="pizarra-planck"]');
+    if (pizarra && typeof window.loadPassage === 'function') {
+        pizarra.addEventListener('click', () => {
+            console.log('📜 Navegando a Pizarra de Planck');
+            window.loadPassage('pasaje_pizarra');
+        });
+    }
+})();
+</script>
