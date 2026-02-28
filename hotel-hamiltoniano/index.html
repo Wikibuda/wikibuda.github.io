@@ -135,7 +135,7 @@
         window.quantumEngine = new QuantumEngine();
         console.log('🏨 Hotel Hamiltoniano - Sistema cargado');
         
-        const STORAGE_KEY = 'hotel_hamiltoniano_state_v2';
+        const STORAGE_KEY = 'hotel_hamiltoniano_v2';
         function saveState() {
             const sup = Array.from(window.quantumEngine.superposedStates.entries()).map(([id, s]) => ({
                 id,

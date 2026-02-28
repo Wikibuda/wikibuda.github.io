@@ -35,35 +35,19 @@
         
         <div class="quantum-options">
             <button class="quantum-option superposed" data-choice="0" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 0, this)">
-                🤔 "Prefiero observar las opciones antes de colapsar la función de onda"
+                👁️ "Prefiero observar antes de colapsar la función de onda"
             </button>
             
             <button class="quantum-option superposed" data-choice="1" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 1, this)">
-                🆕 "Escribir en la pizarra de Planck"
+                🏗️ "Escribir en la pizarra de Planck"
             </button>
             
             <button class="quantum-option superposed" data-choice="2" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 2, this)">
-                🐱 "¿Dónde está el gato de Schrödinger? Necesito confirmar su estado vital"
+                🐱 "Interactuar con el Gato de Schrödinger"
             </button>
             
             <button class="quantum-option superposed" data-choice="3" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 3, this)">
-                📝 "Deseo calcular manualmente la entropía del jacuzzi primero"
-            </button>
-            
-            <button class="quantum-option superposed" data-choice="4" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 4, this)">
-                🎒 "Mi maleta de paradojas necesita ser entregada al botones poético"
-            </button>
-            
-            <button class="quantum-option superposed" data-choice="5" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 5, this)">
-                ☕ "Antes que nada, necesito medir la temperatura de Bekenstein de un café"
-            </button>
-            
-            <button class="quantum-option superposed" data-choice="6" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 6, this)">
-                🔮 "Quiero explorar el lobby en estado de superposición sensorial"
-            </button>
-            
-            <button class="quantum-option superposed" data-choice="7" onclick="window.quantumInterface.collapseChoice('lobby-entrada', 7, this)">
-                ⚛️ "Deseo ajustar el spin de mi función de onda antes de proceder"
+                🛁 "Calcular la entropía del jacuzzi"
             </button>
         </div>
     </div>
@@ -308,14 +292,10 @@
     
     // Crear superposición inicial para las decisiones del lobby (si no existe)
     const lobbyOptions = [
-        "Prefiero observar las opciones antes de colapsar la función de onda", 
+        "Prefiero observar antes de colapsar la función de onda", 
         "Escribir en la pizarra de Planck",
-        "¿Dónde está el gato de Schrödinger? Necesito confirmar su estado vital",
-        "Deseo calcular manualmente la entropía del jacuzzi primero",
-        "Mi maleta de paradojas necesita ser entregada al botones poético",
-        "Antes que nada, necesito medir la temperatura de Bekenstein de un café",
-        "Quiero explorar el lobby en estado de superposición sensorial",
-        "Deseo ajustar el spin de mi función de onda antes de proceder"
+        "Interactuar con el Gato de Schrödinger",
+        "Calcular la entropía del jacuzzi"
     ];
     
     const existing = window.quantumEngine.getDecisionState('lobby-entrada');
